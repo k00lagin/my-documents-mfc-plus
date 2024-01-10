@@ -113,28 +113,28 @@
 							if (prefillData) {
 								if (prefillData.personIn !== undefined) {
 									if (prefillData.personIn)
-										worksheet.getCell(`I${r + 1}`).value = "0";
+										worksheet.getCell(`I${r + 1}`).value = 0;
 									if (prefillData.orgIn)
-										worksheet.getCell(`J${r + 1}`).value = "0";
+										worksheet.getCell(`J${r + 1}`).value = 0;
 
 									if (prefillData.personOut)
-										worksheet.getCell(`N${r + 1}`).value = "0";
+										worksheet.getCell(`N${r + 1}`).value = 0;
 									if (prefillData.personOutPositive)
-										worksheet.getCell(`O${r + 1}`).value = "0";
+										worksheet.getCell(`O${r + 1}`).value = 0;
 									if (prefillData.orgOut)
-										worksheet.getCell(`P${r + 1}`).value = "0";
+										worksheet.getCell(`P${r + 1}`).value = 0;
 									if (prefillData.orgOutPositive)
-										worksheet.getCell(`Q${r + 1}`).value = "0";
+										worksheet.getCell(`Q${r + 1}`).value = 0;
 								} else if (prefillData.allIn !== undefined) {
 									if (prefillData.allIn)
-										worksheet.getCell(`G${r + 1}`).value = "0";
+										worksheet.getCell(`G${r + 1}`).value = 0;
 									if (prefillData.foreignIn)
-										worksheet.getCell(`H${r + 1}`).value = "0";
+										worksheet.getCell(`H${r + 1}`).value = 0;
 
 									if (prefillData.allOut)
-										worksheet.getCell(`L${r + 1}`).value = "0";
+										worksheet.getCell(`L${r + 1}`).value = 0;
 									if (prefillData.foreignOut)
-										worksheet.getCell(`M${r + 1}`).value = "0";
+										worksheet.getCell(`M${r + 1}`).value = 0;
 								}
 								if (prefillData.comment) {
 									worksheet.getCell(`T${r + 1}`).value = prefillData.comment;
