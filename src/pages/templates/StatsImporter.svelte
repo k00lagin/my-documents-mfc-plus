@@ -37,7 +37,7 @@
 	}
 	function handleSheetSelect(sheetname) {
 		if (!sheetname) return;
-		console.log(sheetname);
+		// console.log(sheetname);
 		let worksheet = workbook.getWorksheet(sheetname);
 		let col = 3,
 			pentahoOfficeNames = new Set(),
@@ -83,7 +83,7 @@
 		dispatch("import", pentahoData);
 		dispatch("got-office-names", [...pentahoOfficeNames]);
 
-		console.log(pentahoOfficeNames);
+		// console.log(pentahoOfficeNames);
 	}
 	$: handleSheetSelect(sheetname);
 </script>
