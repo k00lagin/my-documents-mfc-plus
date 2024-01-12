@@ -20,7 +20,7 @@
 
 		checkAuth();
 		setInterval(() => {
-			checkAuth();
+			if ($authorized) checkAuth();
 		}, 60 * 1000);
 	});
 </script>

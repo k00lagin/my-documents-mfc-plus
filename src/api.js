@@ -9,7 +9,13 @@ export const checkAuth = () => {
 	fetch("https://моидокументы.рф/mfc/ws/auth/current", {
 		credentials: "same-origin",
 	})
-		.then((response) => response.json())
+		.then((response) => {
+			if (response.ok) {
+				return response.json();
+			} else {
+				throw new Error("Не авторизован");
+			}
+		})
 		.then((data) => {
 			user.update(() => data);
 			authorized.update(() => true);
