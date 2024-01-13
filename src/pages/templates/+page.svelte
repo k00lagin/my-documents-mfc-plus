@@ -246,7 +246,7 @@
 								type: office.type,
 								name: office.short_name || office.id,
 							}}
-							fillData={importedData?.[office.pentaho_name]?.[template] || undefined}
+							fillData={importedData?.[office.pentaho_name]?.[template !== 'otherServices' ? template : 'federal'] || undefined}
 							type={template}
 							on:new-services={({ detail }) => {
 								isNewServicesDialogOpen = true;

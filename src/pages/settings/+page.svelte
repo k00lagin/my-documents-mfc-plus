@@ -67,7 +67,7 @@
 					}}
 				/>
 			</label>
-			<!-- {#if $settings["prefillTemplates"]}
+			{#if $settings["prefillTemplates"]}
 				<label class="cursor-pointer label">
 					<span class="label-text"
 						>Заполнять отчёты по услугам без скачивания</span
@@ -78,7 +78,7 @@
 						bind:checked={$settings["fillTemplates"]}
 					/>
 				</label>
-			{/if} -->
+			{/if}
 		</div>
 	</div>
 </div>

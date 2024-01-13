@@ -18,7 +18,7 @@
 		}
 	}
 
-	async function handleFileChange() {
+	async function handleFileChange(e) {
 		if (input.files.length > 0) {
 			const file = input.files[0];
 			if (file) {
@@ -34,6 +34,10 @@
 				sheetname = sheetnames[0];
 			}
 		}
+	}
+	function resetInput(e) {
+		input.value = "";
+		e.target.value = "";
 	}
 	function handleSheetSelect(sheetname) {
 		if (!sheetname) return;
@@ -60,21 +64,26 @@
 			}
 			let row = 4;
 			while (worksheet.getCell(row, 1).value) {
-				let level = ({
-					"Государственная": "federal",
-					"Муниципальная": "municipal|municipal",
+				let level = {
+					Государственная: "federal",
+					Муниципальная: "municipal|municipal",
 					"Государственная, переданная на муниципальный уровень": "municipal",
-					"Региональная": "regional",
-				})[worksheet.getCell(row, 1).value];
+					Региональная: "regional",
+				}[worksheet.getCell(row, 1).value];
 				let name = worksheet.getCell(row, 2).value;
 				let client = worksheet.getCell(2, col).value; // ИП, ФЛ, ЮЛ, ЮЛ+ФЛ, Н/Д
-				let type = ({
+				let type = {
 					"Колво по приему документов": "in",
 					"Колво по выдаче документов": "out",
-					"Колво полож. результатов": "positive"
-				})[worksheet.getCell(3, col).value];
+					"Колво полож. результатов": "positive",
+				}[worksheet.getCell(3, col).value];
 				let value = worksheet.getCell(row, col).value;
-				if (value !== '') recursiveSet(pentahoData, `${officeName}|${level}|${name}|${client}|${type}`, value);
+				if (value !== "")
+					recursiveSet(
+						pentahoData,
+						`${officeName}|${level}|${name}|${client}|${type}`,
+						value,
+					);
 
 				row++;
 			}
@@ -88,7 +97,21 @@
 	$: handleSheetSelect(sheetname);
 </script>
 
-{#if sheetnames.length > 0}
+
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<label class="btn btn-xs" title="Выберите файл с выгрузкой из Pentaho" on:click={resetInput} class:hidden={sheetnames.length}>
+	Выбрать файл с данными
+	<input
+		type="file"
+		accept=".xlsx"
+		class="hidden"
+		on:change={(e) => handleFileChange(e)}
+		bind:this={input}
+	/>
+</label>
+
+{#if sheetnames.length}
 	<div class="join">
 		<select
 			class="sheetnames select select-xs select-bordered join-item"
@@ -103,23 +126,13 @@
 			title="Очистить"
 			on:click={() => {
 				sheetnames = [];
+				sheetname = '';
 				dispatch("reset");
 			}}
 		>
 			<img src={iconStore["mdi_close"]} alt="Очистить" />
 		</button>
 	</div>
-{:else}
-	<label class="btn btn-xs" title="Выберите файл с выгрузкой из Pentaho">
-		Выбрать файл с данными
-		<input
-			type="file"
-			accept=".xlsx"
-			class="hidden"
-			on:change={handleFileChange}
-			bind:this={input}
-		/>
-	</label>
 {/if}
 
 <style>

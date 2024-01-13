@@ -5,6 +5,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import postcss from "rollup-plugin-postcss";
 import sveltePreprocess from 'svelte-preprocess';
+import { preprocessMeltUI, sequence } from '@melt-ui/pp';
 import fs from 'fs';
 
 const preamble = fs.readFileSync('src/meta.js', 'utf-8');
@@ -30,9 +31,11 @@ export default [
 		plugins: [
 			postcss({ minimize: false }),
 			svelte({
-				preprocess: sveltePreprocess({
+				preprocess: sequence([
+					preprocessMeltUI(),
+					sveltePreprocess({
 					sourceMap: !production
-				}),
+				})]),
 				compilerOptions: {
 					dev: !production
 				},

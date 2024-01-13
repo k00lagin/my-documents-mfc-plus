@@ -2,7 +2,7 @@
 // @name        MRS-MFC Plus
 // @name:ru-RU  МРС МФЦ Плюс
 // @namespace   k00lagin.my-documents-mfc-plus
-// @version     0.7.4
+// @version     0.8.0
 // @description Помогает работать с порталом МРС МФЦ. Для использования нового интерфейса используется адрес https://моидокументы.рф/mfc-plus
 // @author      k00lagin
 // @match       https://mfc-174.ru/store/*
@@ -32,6 +32,7 @@
 // @resource    raphael_disconnect https://mfc-174.ru/icons/raphael/disconnect.svg
 // @resource    mdi_pencil https://mfc-174.ru/icons/mdi/pencil-outline.svg
 // @resource    mdi_trash https://mfc-174.ru/icons/mdi/trash-can-outline.svg
+// @resource    mdi_content-save https://mfc-174.ru/icons/mdi/content-save.svg
 // @resource    mdi_chevron-down https://mfc-174.ru/icons/mdi/chevron-down.svg
 // @resource    mdi_chevron-up https://mfc-174.ru/icons/mdi/chevron-up.svg
 // @require     https://mfc-174.ru/store/scripts/3rd-party/xlsx.bundle.js

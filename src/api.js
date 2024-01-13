@@ -137,6 +137,7 @@ export const downloadBlob = (blob, filename) => {
 }
 
 export const fetchFile = (url) => {
+	let filename = '', extension = '';
 	return new Promise((resolve, reject) => {
 		fetch(url, {
 			credentials: "same-origin"
@@ -145,10 +146,15 @@ export const fetchFile = (url) => {
 				if (!response.ok) {
 					reject("Network response was not ok");
 				}
+				let contentDisposition = response.headers.get('Content-Disposition');
+				if (contentDisposition.startsWith('attachment; filename="')) {
+					filename = decodeURI(contentDisposition.slice(22, -1)).split('+').join(' ');
+					extension = filename.substring(filename.lastIndexOf('.') + 1)
+				}
 				return response.blob();
 			})
 			.then(blob => {
-				resolve(blob);
+				resolve({blob, filename, extension});
 			})
 			.catch(error => {
 				reject(error);

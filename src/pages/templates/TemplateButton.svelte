@@ -10,8 +10,14 @@
 	} from "../../api.js";
 	import { user, settings, serviceBindings } from "../../stores.js";
 	import { convert, convertAddress } from "../../converter.js";
+	import FillServices from "./FillServices/FillServices.svelte";
+	let fillServices;
 
-	export let year, month, type, office, fillData = null;
+	export let year,
+		month,
+		type,
+		office,
+		fillData = null;
 
 	let templates = {
 		federal: {
@@ -140,71 +146,18 @@
 									worksheet.getCell(`T${r + 1}`).value = prefillData.comment;
 								}
 
-								// if ($settings.fillTemplates && $serviceBindings?.[type] && fillData) {
-								// 	if (!$serviceBindings?.[type][serviceName] && fillData[serviceName]) {
-								// 		console.log('exact match!', serviceName, fillData[serviceName]);
-								// 		$serviceBindings[type][serviceName] = serviceName;
-								// 	}
-								// 	if ($serviceBindings?.[type][serviceName] && fillData[serviceName]) {
-								// 		// if (prefillData.personIn && prefillData.orgIn) {
-								// 		// 	if (fillData[serviceName]['ФЛ'].in) {
-								// 		// 		worksheet.getCell(`I${r + 1}`).value = fillData[serviceName]['ФЛ'].in;
-								// 		// 	}
-								// 		// 	if (fillData[serviceName]['ЮЛ']?.in || fillData[serviceName]['ИП']?.in) {
-								// 		// 		worksheet.getCell(`J${r + 1}`).value = Number(fillData[serviceName]?.['ЮЛ']?.in) + Number(fillData[serviceName]?.['ИП']?.in);
-								// 		// 	}
-								// 		// 	if (prefillData.personOut && fillData[serviceName]['ФЛ'].out) {
-								// 		// 		worksheet.getCell(`N${r + 1}`).value = fillData[serviceName]['ФЛ'].out;
-								// 		// 	}
-								// 		// 	if (prefillData.personOutPositive && fillData[serviceName]['ФЛ'].positive) {
-								// 		// 		worksheet.getCell(`O${r + 1}`).value = fillData[serviceName]['ФЛ'].positive;
-								// 		// 	}
-								// 		// 	if (prefillData.orgOut && (fillData[serviceName]?.['ЮЛ']?.out || fillData[serviceName]?.['ИП']?.out)) {
-								// 		// 		worksheet.getCell(`P${r + 1}`).value = Number(fillData[serviceName]?.['ЮЛ']?.out) + Number(fillData[serviceName]?.['ИП']?.out);
-								// 		// 	}
-								// 		// 	if (prefillData.orgOutPositive && fillData[serviceName]['ЮЛ']?.positive || fillData[serviceName]?.['ИП']?.positive) {
-								// 		// 		worksheet.getCell(`Q${r + 1}`).value = Number(fillData[serviceName]?.['ЮЛ']?.positive) + Number(fillData[serviceName]?.['ИП']?.positive);
-								// 		// 	}
-								// 		// 	let strange = Object.keys(fillData[serviceName])?.filter((name) => name !== 'ФЛ' && name !== 'ЮЛ' && name !== 'ИП');
-								// 		// 	if (strange.length > 0) {
-								// 		// 		console.log('strange', strange);
-								// 		// 	}
-								// 		// } else if (prefillData.personIn && !prefillData.orgIn) {
-
-								// 		// } else if (!prefillData.personIn && prefillData.orgIn) {
-
-								// 		// } else if (prefillData.allIn) {
-
-								// 		// }
-
-								// 		if (prefillData.personIn && fillData[serviceName]['ФЛ'].in) {
-								// 			worksheet.getCell(`I${r + 1}`).value = fillData[serviceName]['ФЛ'].in;
-								// 		}
-								// 		if (prefillData.personOut && fillData[serviceName]['ФЛ'].out) {
-								// 			worksheet.getCell(`N${r + 1}`).value = fillData[serviceName]['ФЛ'].out;
-								// 		}
-								// 		if (prefillData.personOutPositive && fillData[serviceName]['ФЛ'].positive) {
-								// 			worksheet.getCell(`O${r + 1}`).value = fillData[serviceName]['ФЛ'].positive;
-								// 		}
-								// 		if (prefillData.orgIn && (fillData[serviceName]?.['ЮЛ']?.in || fillData[serviceName]?.['ИП']?.in)) {
-								// 			worksheet.getCell(`J${r + 1}`).value = Number(fillData[serviceName]?.['ЮЛ'].in) + Number(fillData[serviceName]?.['ИП'].in);
-								// 		}
-								// 		if (prefillData.orgOut && (fillData[serviceName]?.['ЮЛ']?.out || fillData[serviceName]?.['ИП']?.out)) {
-								// 			worksheet.getCell(`P${r + 1}`).value = Number(fillData[serviceName]?.['ЮЛ']?.out) + Number(fillData[serviceName]?.['ИП']?.out);
-								// 		}
-								// 		if (prefillData.orgOutPositive && (fillData[serviceName]?.['ЮЛ']?.positive || fillData[serviceName]?.['ИП']?.positive)) {
-								// 			worksheet.getCell(`Q${r + 1}`).value = Number(fillData[serviceName]?.['ЮЛ']?.positive) + Number(fillData[serviceName]?.['ИП']?.positive);
-								// 		}
-								// 	}
-								// }
 							} else {
-								const serviceType = worksheet.getCell(`G${r + 1}`).fill ? 'person-org' : worksheet.getCell(`H${r + 1}`).fill ? 'all' : 'all-foreign';
+								const serviceType = worksheet.getCell(`G${r + 1}`).fill
+									? "person-org"
+									: worksheet.getCell(`H${r + 1}`).fill
+									  ? "all"
+									  : "all-foreign";
 								newServices.push({
 									serviceName: worksheet.getCell(addr).value,
 									formType: type,
 									row: r + 1,
-									type: serviceType
-								})
+									type: serviceType,
+								});
 							}
 						}
 					}
@@ -213,6 +166,13 @@
 
 				if (newServices.length > 0) {
 					dispatch("new-services", { services: newServices, type });
+				} else if ($settings.fillTemplates && $serviceBindings?.[type] && fillData) {
+						fillServices.init({
+							type,
+							workbook,
+							fillData,
+							filename: `${templates[type].letter} - ${office.name} - ${month}.${year}.xlsx`
+						});
 				} else {
 					const buffer = await workbook.xlsx.writeBuffer();
 					downloadBlob(
@@ -225,10 +185,10 @@
 					uploads?.items[0]?.uploadFile
 						? `https://моидокументы.рф/mfc/ws/file/view/${uploads?.items[0].uploadFile.fileId}`
 						: emptyTemplateUrl,
-				).then((blob) => {
+				).then(({blob, extension}) => {
 					downloadBlob(
 						blob,
-						`${templates[type].letter} - ${office.name} - ${month}.${year}.xls`,
+						`${templates[type].letter} - ${office.name} - ${month}.${year}.${extension}`,
 					);
 				});
 			}
@@ -245,6 +205,8 @@
 	title={templates[type].title}
 	on:click={handleClick}>{templates[type].letter}</button
 >
+
+<FillServices bind:this={fillServices} />
 
 <style>
 </style>
