@@ -136,10 +136,6 @@
 {/if}
 
 <style>
-	button.sheetname {
-		background-color: transparent !important;
-		--tw-text-opacity: 1;
-	}
 	.sheetnames {
 		outline-offset: -1px;
 		outline-color: oklch(var(--s) / 0.5);

@@ -25,26 +25,34 @@
 		$inputValue = $selected?.label ?? "";
 	}
 
+	$: unbindedServices = templateServices.filter(
+		(service) =>
+			!$serviceBindings[type][service] &&
+			Object.keys($serviceBindings[type]).findIndex(
+				(key) => $serviceBindings[type][key].match === service,
+			) === -1,
+	);
+
 	$: filteredServices = $touchedInput
-		? templateServices.filter((service) => {
+		? unbindedServices.filter((service) => {
 				const normalizedInput = $inputValue.toLowerCase();
 				return service.toLowerCase().includes(normalizedInput);
-		  })
-		: templateServices;
+			})
+		: unbindedServices;
 
 	function handleBind() {
-		if ($selected.value === 'blacklist') {
+		if ($selected.value === "blacklist") {
 			$serviceBindings[type][strayService] = {
-				blacklist: true
-			}
-		} else if ($selected.value === 'other') {
+				blacklist: true,
+			};
+		} else if ($selected.value === "other") {
 			$serviceBindings[type][strayService] = {
-				movedTo: 'otherServices'
-			}
+				movedTo: "otherServices",
+			};
 		} else {
 			$serviceBindings[type][strayService] = {
-				match: $selected.value
-			}
+				match: $selected.value,
+			};
 		}
 	}
 </script>
@@ -52,15 +60,15 @@
 <div class="flex flex-col gap-1">
 	<!-- svelte-ignore a11y-label-has-associated-control -->
 	<label use:melt={$label}>
-		<span>Выберите соответствующую услугу из шаблона:</span>
+		<span>{strayService}</span>
 	</label>
 
 	<div class="combobox">
 		<div class="input-wrap">
 			<input
 				use:melt={$input}
-				class="flex items-center justify-between w-full h-10 px-3 pr-12 rounded-sm input input-sm"
-				placeholder="Название услуги"
+				class="flex items-center justify-between w-full pr-12 rounded-sm input input-sm input-bordered"
+				placeholder="Выберите соответствующую услугу из шаблона:"
 			/>
 			<div class="absolute z-10 -translate-y-1/2 right-2 top-1/2">
 				{#if $open}
@@ -71,14 +79,17 @@
 			</div>
 		</div>
 		{#if $selected}
-		<div class="binding-controls">
-			<button class="btn btn-xs btn-square btn-ghost" on:click={handleBind}>
-				<img src={iconStore["mdi_content-save"]} alt="" />
-			</button>
-			<button class="btn btn-xs btn-square btn-ghost" on:click={() => $selected = undefined}>
-				<img src={iconStore["mdi_trash"]} alt="" />
-			</button>
-		</div>
+			<div class="binding-controls">
+				<button class="btn btn-xs btn-square btn-ghost" on:click={handleBind}>
+					<img src={iconStore["mdi_content-save"]} alt="" />
+				</button>
+				<button
+					class="btn btn-xs btn-square btn-ghost"
+					on:click={() => ($selected = undefined)}
+				>
+					<img src={iconStore["mdi_trash"]} alt="" />
+				</button>
+			</div>
 		{/if}
 	</div>
 </div>
@@ -90,6 +101,14 @@
 		transition:fly={{ duration: 150, y: -5 }}
 	>
 		<div class="list-wrap">
+			<li
+				class="option stray-service"
+				use:melt={$option({
+					disabled: true,
+				})}
+			>
+				{strayService}
+			</li>
 			<li
 				class="option"
 				use:melt={$option({
@@ -151,6 +170,10 @@
 		position: relative;
 		flex-grow: 1;
 	}
+	input:focus {
+		outline: 2px solid oklch(var(--s) / 0.5);
+		outline-offset: -1px;
+	}
 	.bind-menu {
 		z-index: 10;
 		display: flex;
@@ -159,6 +182,10 @@
 		max-height: 24rem;
 		overflow: clip;
 		background-color: oklch(var(--b1));
+		/* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+		box-shadow: oklch(var(--bc) / 0.2) 0px 2px 8px 0px;
+		border: 0.5px solid oklch(var(--bc) / 0.125);
+		border-radius: 0.5rem;
 	}
 	.list-wrap {
 		padding: 0.5rem;
@@ -171,7 +198,11 @@
 		cursor: default;
 		user-select: none;
 	}
-	li.option:hover {
+	li.option.stray-service {
+		opacity: 0.65;
+		font-weight: 700;
+	}
+	li.option:not(.stray-service):hover {
 		background-color: oklch(var(--s) / 0.15);
 	}
 	.check {

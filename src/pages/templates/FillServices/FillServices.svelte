@@ -112,31 +112,34 @@
 			</header>
 			{#if autoBindedServices.length > 0 || strayServices.length > 0}
 				<h2>Некоторые услуги из выгрузки не привязаны к услугам в шаблоне</h2>
-				<details class="collapse collapse-arrow">
-					<summary class="collapse-title"
-						>Автоматически привязанные услуги ({autoBindedServices.length}):</summary
-					>
-					<div class="collapse-content">
-						<ol class="auto">
-							{#each autoBindedServices as serviceName}
-								<li class="auto">{serviceName}</li>
-							{/each}
-						</ol>
-					</div>
-				</details>
-				<h3>Не привязанные услуги ({strayServices.length}):</h3>
-				<ol>
-					{#each strayServices as serviceName (serviceName)}
-						<li>
-							<span>{serviceName}</span>
-							<BindService
-								strayService={serviceName}
-								{templateServices}
-								{type}
-							/>
-						</li>
-					{/each}
-				</ol>
+				{#if autoBindedServices.length > 0}
+					<details class="collapse collapse-arrow">
+						<summary class="collapse-title"
+							>Автоматически привязанные услуги ({autoBindedServices.length}):</summary
+						>
+						<div class="collapse-content">
+							<ol class="auto">
+								{#each autoBindedServices as serviceName}
+									<li class="auto">{serviceName}</li>
+								{/each}
+							</ol>
+						</div>
+					</details>
+				{/if}
+				{#if strayServices.length > 0}
+					<h3 class="mt-6">Не привязанные услуги ({strayServices.length}):</h3>
+					<ol class="flex flex-col gap-4 mt-4 mb-6">
+						{#each strayServices as serviceName (serviceName)}
+							<li>
+								<BindService
+									strayService={serviceName}
+									{templateServices}
+									{type}
+								/>
+							</li>
+						{/each}
+					</ol>
+				{/if}
 			{:else}
 				<table class="table table-xs">
 					<thead>
@@ -175,9 +178,9 @@
 								title={$serviceBindings?.[type]?.[serviceName]?.blacklist
 									? "В статистике не учитывается"
 									: $serviceBindings?.[type]?.[serviceName]?.movedTo ===
-									    "otherServices"
-									  ? "Учитывается в шаблоне услуг иных организаций"
-									  : ""}
+										  "otherServices"
+										? "Учитывается в шаблоне услуг иных организаций"
+										: ""}
 							>
 								<td class:success={templateServices.includes(serviceName)}
 									>{serviceName}</td
@@ -189,24 +192,34 @@
 							</tr>
 						{:else}
 							<tr>
-								<th class="opacity-50" colspan="8">Не найдены принятые услуги, шаблон останется пустым</th>
+								<th class="opacity-50" colspan="8"
+									>Не найдены принятые услуги, шаблон останется пустым</th
+								>
 							</tr>
 						{/each}
 						{#if municipalServices.length}
-							{@const mergedFillData = Object.keys(fillData.municipal).reduce((acc, serviceName) => {
-								Object.keys(fillData.municipal[serviceName]).forEach((type) => {
-									if (acc[type] === undefined) acc[type] = {};
-									Object.keys(fillData.municipal[serviceName][type]).forEach((key) => {
-										if (acc[type][key] === undefined) acc[type][key] = 0;
-										acc[type][key] += fillData.municipal[serviceName][type][key];
-									})
-								});
-								return acc;
-							}, {})}
+							{@const mergedFillData = Object.keys(fillData.municipal).reduce(
+								(acc, serviceName) => {
+									Object.keys(fillData.municipal[serviceName]).forEach(
+										(type) => {
+											if (acc[type] === undefined) acc[type] = {};
+											Object.keys(
+												fillData.municipal[serviceName][type],
+											).forEach((key) => {
+												if (acc[type][key] === undefined) acc[type][key] = 0;
+												acc[type][key] +=
+													fillData.municipal[serviceName][type][key];
+											});
+										},
+									);
+									return acc;
+								},
+								{},
+							)}
 							{@const templateRow = worksheet.getRow(
 								templateServices.indexOf("Муниципальные услуги") + 8,
 							)}
-							<tr data-merged={JSON.stringify(mergedFillData['ФЛ'])}>
+							<tr data-merged={JSON.stringify(mergedFillData["ФЛ"])}>
 								<th colspan="8">Муниципальные услуги</th>
 							</tr>
 							{#each municipalServices as serviceName, index}
@@ -215,7 +228,9 @@
 									<DisplayNumbers
 										row={templateRow}
 										fillData={fillData.municipal[serviceName]}
-										mergedFillData={(municipalServices.length && index === 0) && mergedFillData}
+										mergedFillData={municipalServices.length &&
+											index === 0 &&
+											mergedFillData}
 										hiddenResult={municipalServices.length && index > 0}
 									/>
 								</tr>
