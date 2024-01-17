@@ -2,7 +2,7 @@
 // @name        MRS-MFC Plus
 // @name:ru-RU  МРС МФЦ Плюс
 // @namespace   k00lagin.my-documents-mfc-plus
-// @version     0.8.1
+// @version     0.8.2
 // @description Помогает работать с порталом МРС МФЦ. Для использования нового интерфейса используется адрес https://моидокументы.рф/mfc-plus
 // @author      k00lagin
 // @match       https://mfc-174.ru/store/*
