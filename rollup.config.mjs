@@ -1,14 +1,15 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-// import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
 import postcss from "rollup-plugin-postcss";
 import sveltePreprocess from 'svelte-preprocess';
 import { preprocessMeltUI, sequence } from '@melt-ui/pp';
+import metablock from 'rollup-plugin-userscript-metablock';
 import fs from 'fs';
 
-const preamble = fs.readFileSync('src/meta.js', 'utf-8');
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+
 const production = !process.env.ROLLUP_WATCH;
 
 export default [
@@ -16,8 +17,18 @@ export default [
 		input: 'src/meta.js',
 		output: {
 			file: 'public/build/my-documents-mfc-plus.meta.js',
-			banner: preamble
-		}
+		},
+		plugins: [
+			metablock({
+				file: './src/meta.json',
+				override: {
+					version: pkg.version,
+					description: pkg.description,
+					author: pkg.author,
+					license: pkg.license,
+				}
+			})
+		]
 	},
 	{
 		input: 'src/main.js',
@@ -26,16 +37,15 @@ export default [
 			format: 'iife',
 			name: 'app',
 			file: 'public/build/my-documents-mfc-plus.user.js',
-			banner: preamble
 		},
 		plugins: [
-			postcss({ minimize: false }),
+			postcss({ minimize: true }),
 			svelte({
 				preprocess: sequence([
 					preprocessMeltUI(),
 					sveltePreprocess({
-					sourceMap: !production
-				})]),
+						sourceMap: !production
+					})]),
 				compilerOptions: {
 					dev: !production
 				},
@@ -48,17 +58,19 @@ export default [
 			}),
 			commonjs(),
 
-			// typescript({
-			// 	sourceMap: !production,
-			// 	inlineSources: !production
-			// }),
-
-			!production && serve(),
-
 			production && terser({
 				output: {
 					beautify: true,
-					preamble: preamble
+				}
+			}),
+
+			metablock({
+				file: './src/meta.json',
+				override: {
+					version: pkg.version,
+					description: pkg.description,
+					author: pkg.author,
+					license: pkg.license,
 				}
 			})
 		],
