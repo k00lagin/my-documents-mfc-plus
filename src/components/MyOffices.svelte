@@ -1,4 +1,5 @@
 <script>
+	import { inlineSvg } from "@svelte-put/inline-svg";
 	import { iconStore } from "../icon-store.js";
 	import { myOffices, removeOffice, settings } from "../stores.js";
 </script>
@@ -27,8 +28,10 @@
 						class="btn btn-xs btn-square"
 						on:click={() => {
 							removeOffice(office.id);
-						}}><img src={iconStore["mdi_close"]} alt="" /></button
+						}}
 					>
+						<svg use:inlineSvg={iconStore["mdi_close"]}></svg>
+					</button>
 				</td>
 			</tr>
 		{/each}

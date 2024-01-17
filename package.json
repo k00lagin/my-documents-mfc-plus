@@ -29,6 +29,7 @@
 		"@rollup/plugin-commonjs": "^25.0.7",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-typescript": "^11.1.5",
+		"@svelte-put/inline-svg": "^3.0.0",
 		"daisyui": "^4.4.22",
 		"node-sass": "^9.0.0",
 		"rollup": "^4.9.1",

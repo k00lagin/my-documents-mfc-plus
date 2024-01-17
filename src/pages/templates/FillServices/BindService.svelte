@@ -2,6 +2,7 @@
 	import { createCombobox, melt } from "@melt-ui/svelte";
 	import { fly } from "svelte/transition";
 	import { serviceBindings } from "../../../stores";
+	import { inlineSvg } from "@svelte-put/inline-svg"
 	import { iconStore } from "../../../icon-store";
 
 	export let strayService = "";
@@ -72,22 +73,22 @@
 			/>
 			<div class="absolute z-10 -translate-y-1/2 right-2 top-1/2">
 				{#if $open}
-					<img src={iconStore["mdi_chevron-up"]} alt="" />
+					<svg use:inlineSvg={iconStore["mdi_chevron-up"]} class="icon-xs" />
 				{:else}
-					<img src={iconStore["mdi_chevron-down"]} alt="" />
+					<svg use:inlineSvg={iconStore["mdi_chevron-down"]} class="icon-xs" />
 				{/if}
 			</div>
 		</div>
 		{#if $selected}
 			<div class="binding-controls">
 				<button class="btn btn-xs btn-square btn-ghost" on:click={handleBind}>
-					<img src={iconStore["mdi_content-save"]} alt="" />
+					<svg use:inlineSvg={iconStore["mdi_content-save"]} />
 				</button>
 				<button
 					class="btn btn-xs btn-square btn-ghost"
 					on:click={() => ($selected = undefined)}
 				>
-					<img src={iconStore["mdi_trash"]} alt="" />
+					<svg use:inlineSvg={iconStore["mdi_trash"]} />
 				</button>
 			</div>
 		{/if}
@@ -118,7 +119,7 @@
 			>
 				{#if $isSelected("blacklist")}
 					<div class="check">
-						<img src={iconStore["mdi_check"]} alt="" />
+						<svg use:inlineSvg={iconStore["mdi_check"]} class="icon-xs" />
 					</div>
 				{/if}
 				Не учитывается в статистике
@@ -133,7 +134,7 @@
 				>
 					{#if $isSelected("other")}
 						<div class="check">
-							<img src={iconStore["mdi_check"]} alt="" />
+							<svg use:inlineSvg={iconStore["mdi_check"]} class="icon-xs" />
 						</div>
 					{/if}
 					Учитывается в шаблоне услуг иных организаций
@@ -143,7 +144,7 @@
 				<li class="option" use:melt={$option(toOption(service))}>
 					{#if $isSelected(service)}
 						<div class="check">
-							<img src={iconStore["mdi_check"]} alt="" />
+							<svg use:inlineSvg={iconStore["mdi_check"]} class="icon-xs" />
 						</div>
 					{/if}
 					{service}

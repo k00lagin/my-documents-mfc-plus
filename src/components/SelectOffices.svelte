@@ -1,4 +1,5 @@
 <script>
+	import { inlineSvg } from "@svelte-put/inline-svg";
 	import { onMount } from "svelte";
 	import {
 		mfcList,
@@ -41,8 +42,9 @@
 				class="btn btn-xs btn-square"
 				on:click={() => {
 					addOffice(office);
-				}}><img src={iconStore["mdi_plus"]} alt="" /></button
-			>
+				}}
+				><svg use:inlineSvg={iconStore["mdi_plus"]}></svg>
+			</button>
 			{office.address}
 		</p>
 	{/each}
@@ -55,8 +57,10 @@
 				class="btn btn-xs btn-square"
 				on:click={() => {
 					addOffice(office);
-				}}><img src={iconStore["mdi_plus"]} alt="" /></button
+				}}
 			>
+				<svg use:inlineSvg={iconStore["mdi_plus"]}></svg>
+			</button>
 			{office.address}
 		</p>
 	{/each}

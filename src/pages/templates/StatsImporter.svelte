@@ -2,6 +2,7 @@
 	import { createEventDispatcher } from "svelte";
 	const dispatch = createEventDispatcher();
 	import { myOffices } from "../../stores";
+	import { inlineSvg } from "@svelte-put/inline-svg";
 	import { iconStore } from "../../icon-store";
 	let input = null,
 		sheetnames = [],
@@ -130,7 +131,7 @@
 				dispatch("reset");
 			}}
 		>
-			<img src={iconStore["mdi_close"]} alt="Очистить" />
+			<svg use:inlineSvg={iconStore["mdi_close"]} />
 		</button>
 	</div>
 {/if}

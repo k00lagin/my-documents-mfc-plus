@@ -1,5 +1,6 @@
 <script>
 	import { downloadBlob } from "../../../api.js";
+	import { inlineSvg } from "@svelte-put/inline-svg";
 	import { iconStore } from "../../../icon-store";
 	import { serviceBindings } from "../../../stores";
 	import { portal } from "svelte-portal";
@@ -107,7 +108,7 @@
 			<header>
 				<h3>{title}</h3>
 				<button class="btn btn-xs btn-square" on:click={handleClose}>
-					<img src={iconStore["mdi_close"]} alt="Close" />
+					<svg use:inlineSvg={iconStore["mdi_close"]} />
 				</button>
 			</header>
 			{#if autoBindedServices.length > 0 || strayServices.length > 0}

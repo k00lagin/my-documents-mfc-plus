@@ -1,6 +1,7 @@
 <script>
 	import { onMount, createEventDispatcher } from "svelte";
 	import { prefillData } from "../../../stores";
+	import { inlineSvg } from "@svelte-put/inline-svg";
 	import { iconStore } from "../../../icon-store";
 	const dispatch = createEventDispatcher();
 
@@ -62,7 +63,7 @@
 					class="btn btn-xs btn-square"
 					on:click={() => dispatch("close")}
 				>
-					<img src={iconStore["mdi_close"]} alt="Close" />
+					<svg use:inlineSvg={iconStore["mdi_close"]} />
 				</button>
 			</header>
 			<table class="table table-xs">

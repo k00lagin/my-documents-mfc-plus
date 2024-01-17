@@ -14,3 +14,9 @@ body {
 		opacity: 0.5;
 	}
 }
+
+.btn-xs > svg,
+.icon-xs {
+	width: 16px;
+	height: 16px;
+}

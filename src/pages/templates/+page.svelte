@@ -5,6 +5,7 @@
 	import NewServices from "./NewServices/NewServices.svelte";
 	import { myOffices, notify, offices, settings } from "../../stores.js";
 	import StatsImporter from "./StatsImporter.svelte";
+	import { inlineSvg } from "@svelte-put/inline-svg";
 	import { iconStore } from "../../icon-store";
 	let month, year;
 	let isFillWindowsDialogOpen = false,
@@ -127,16 +128,8 @@
 						title="Связи между офисами на портале и в выгрузке из Pentaho"
 						on:click={() => (isBindingsExpanded = !isBindingsExpanded)}
 					>
-						<img
-							class="frame-1"
-							src={iconStore["raphael_connect"]}
-							alt=""
-						/>
-						<img
-							class="frame-2"
-							src={iconStore["raphael_connect"]}
-							alt=""
-						/>
+						<svg use:inlineSvg={iconStore["raphael_connect"]} class="frame-1" />
+						<svg use:inlineSvg={iconStore["raphael_disconnect"]} class="frame-2" />
 					</button>
 					{#if isBindingsExpanded}
 						Имя в выгрузках
@@ -177,20 +170,14 @@
 										class="btn btn-xs btn-square btn-success"
 										title="Связь установлена"
 									>
-										<img
-											src={iconStore["mdi_check"]}
-											alt=""
-										/>
+										<svg use:inlineSvg={iconStore["mdi_check"]} />
 									</button>
 								{:else}
 									<button
 										class="btn btn-xs btn-square btn-warning"
 										title="В выгрузке отсутствует"
 									>
-										<img
-											src={iconStore["mdi_exclamation"]}
-											alt=""
-										/>
+										<svg use:inlineSvg={iconStore["mdi_exclamation"]} />
 									</button>
 								{/if}
 							{:else}
@@ -198,10 +185,7 @@
 									class="btn btn-xs btn-square btn-error"
 									title="Связь не установлена"
 								>
-									<img
-										src={iconStore["vaadin_exclamation"]}
-										alt=""
-									/>
+									<svg use:inlineSvg={iconStore["vaadin_exclamation"]} />
 								</button>
 							{/if}
 							{#if isBindingsExpanded}
@@ -212,10 +196,7 @@
 										class="ml-auto btn btn-xs btn-square"
 										on:click={() => ($myOffices[officeIdx].pentaho_name = "")}
 									>
-										<img
-											src={iconStore["mdi_close"]}
-											alt=""
-										/>
+										<svg use:inlineSvg={iconStore["mdi_close"]} />
 									</button>
 								{:else if importerOfficeNames}
 									<select

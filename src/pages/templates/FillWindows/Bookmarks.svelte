@@ -1,6 +1,7 @@
 <script>
 	import { createEventDispatcher } from "svelte";
 	import { fillWindowsBookmarks } from "../../../stores";
+	import { inlineSvg } from "@svelte-put/inline-svg";
 	import { iconStore } from "../../../icon-store";
 	const dispatch = createEventDispatcher();
 
@@ -40,20 +41,20 @@
 				class="btn btn-xs join-item btn-square"
 				on:click={() => renameBookmark(index)}
 				title="Переименовать шаблон">
-					<img src={iconStore["mdi_pencil"]} alt="Переименовать шаблон" />
+					<svg use:inlineSvg={iconStore["mdi_pencil"]} />
 				</button
 			>
 			<button
 				class="btn btn-xs join-item btn-square"
 				on:click={() => deleteBookmark(index)}
 				title="Удалить шаблон">
-					<img src={iconStore["mdi_trash"]} alt="Удалить шаблон" />
+					<svg use:inlineSvg={iconStore["mdi_trash"]} />
 				</button
 			>
 		</div>
 	{/each}
 	<button class="btn btn-xs btn-square" on:click={newBookmark} title="Добавить закладку-шаблон на основе текущих введённых данных">
-		<img src={iconStore["mdi_plus"]} alt="Добавить закладку-шаблон на основе текущих введённых данных" />
+		<svg use:inlineSvg={iconStore["mdi_plus"]} />
 	</button>
 </div>
 

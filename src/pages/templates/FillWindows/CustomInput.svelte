@@ -1,4 +1,5 @@
 <script>
+	import { inlineSvg } from '@svelte-put/inline-svg';
 	import { iconStore } from "../../../icon-store";
 
 	export let id, value;
@@ -26,7 +27,7 @@
 		on:click={decrement}
 		disabled={value <= 0}
 	>
-		<img src={iconStore["mdi_chevron-down"]} alt="-" />
+		<svg use:inlineSvg={iconStore["mdi_chevron-down"]} />
 	</button>
 	<input
 		{id}
@@ -36,7 +37,7 @@
 		bind:value
 	/>
 	<button class="btn btn-xs btn-square join-item" on:click={increment}>
-		<img src={iconStore["mdi_chevron-up"]} alt="+" />
+		<svg use:inlineSvg={iconStore["mdi_chevron-up"]} />
 	</button>
 </div>
 

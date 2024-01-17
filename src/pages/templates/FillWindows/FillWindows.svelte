@@ -5,6 +5,7 @@
 	import { convert, convertAddress } from "../../../converter.js";
 	import FillWindowsRow from "./FillWindowsRow.svelte";
 	import Bookmarks from "./Bookmarks.svelte";
+	import { inlineSvg } from "@svelte-put/inline-svg";
 	import { iconStore } from "../../../icon-store.js";
 	export let templateUrl, emptyTemplateUrl, filename, open;
 	const dispatch = createEventDispatcher();
@@ -172,7 +173,7 @@
 					class="btn btn-xs btn-square"
 					on:click={() => dispatch("close")}
 				>
-					<img src={iconStore["mdi_close"]} alt="Close" />
+					<svg use:inlineSvg={iconStore["mdi_close"]} />
 				</button>
 			</header>
 			<table>
