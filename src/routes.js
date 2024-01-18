@@ -36,7 +36,6 @@ export const routes = {
 
 let listeners = [];
 window.addEventListener('navigate', e => {
-	console.log('navigate', listeners, e)
 	listeners.forEach(listener => {
 		listener.dispatchEvent(new CustomEvent('navigate', { detail: e.detail }));
 	})
@@ -45,9 +44,7 @@ export const subscribe = (listener) => {
 	listeners.push(listener);
 }
 export const unsubscribe = (listener) => {
-	console.log('before', listeners)
 	listeners = listeners.filter(l => l !== listener);
-	console.log('after', listeners)
 }
 
 export const router = {
