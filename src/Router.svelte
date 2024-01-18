@@ -10,9 +10,8 @@
 
 	onMount(() => {
 		if (router?.path === undefined) {
-			navigate();
-			// window.addEventListener('urlchange', navigate);
-			window.addEventListener('popstate', navigate);
+			window.addEventListener('navigate', navigate);
+			window.dispatchEvent(new CustomEvent('navigate', { detail: window.location.pathname }));
 		}
 	});
 </script>

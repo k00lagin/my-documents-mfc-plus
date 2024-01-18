@@ -67,7 +67,6 @@
 	.main {
 		flex-grow: 1;
 		height: calc(100% - 48px);
-		padding: 8px 16px;
 	}
 	.alert-error ol {
 		list-style: auto;

@@ -6,6 +6,11 @@
 body {
 	margin: 0;
 	height: 100%;
+	overflow: clip;
+}
+
+.content {
+	overflow: auto;
 }
 
 .btn-xs > svg,
