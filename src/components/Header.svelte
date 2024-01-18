@@ -36,7 +36,7 @@
 	header {
 		height: 48px;
 		width: 100%;
-		background-color: oklch(var(--s) / 50%);
+		background-color: var(--fallback-s, oklch(var(--s) / 50%));
 		box-shadow: 0 0.5px;
 		display: flex;
 		align-items: center;

@@ -299,7 +299,7 @@
 		margin-left: 1rem;
 	}
 	.service.moved {
-		background-color: oklch(var(--s) / 0.1);
+		background-color: var(--fallback-s, oklch(var(--s) / 0.1));
 		opacity: 0.5;
 	}
 	.service.blacklist {

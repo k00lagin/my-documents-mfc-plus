@@ -289,7 +289,7 @@
 	.month:focus,
 	.year:focus {
 		outline-offset: -1px;
-		outline-color: oklch(var(--s) / 0.5);
+		outline-color: var(--fallback-s, oklch(var(--s) / 0.5));
 	}
 	.expand-bindings:not(:hover) > .frame-2 {
 		display: none;

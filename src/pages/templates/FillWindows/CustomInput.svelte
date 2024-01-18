@@ -64,7 +64,7 @@
 		margin: 0.25rem 0.5rem;
 	}
 	.join:focus-within {
-		outline: 2px solid oklch(var(--s) / 0.5);
+		outline: 2px solid var(--fallback-s, oklch(var(--s) / 0.5));
 		outline-offset: -1px;
 	}
 	.join,

@@ -139,6 +139,6 @@
 <style>
 	.sheetnames {
 		outline-offset: -1px;
-		outline-color: oklch(var(--s) / 0.5);
+		outline-color: var(--fallback-s, oklch(var(--s) / 0.5));
 	}
 </style>

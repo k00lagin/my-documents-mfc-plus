@@ -232,7 +232,7 @@
 	}
 	label:hover + input[type="checkbox"] {
 		background-color: rgb(0 0 0 / 0.05);
-		outline: 1px solid oklch(var(--a) / 0.2);
+		outline: 1px solid var(--fallback-a, oklch(var(--a) / 0.2));
 	}
 	table {
 		margin-bottom: 1rem;

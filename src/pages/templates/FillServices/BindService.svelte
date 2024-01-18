@@ -172,7 +172,7 @@
 		flex-grow: 1;
 	}
 	input:focus {
-		outline: 2px solid oklch(var(--s) / 0.5);
+		outline: 2px solid var(--fallback-s, oklch(var(--s) / 0.5));
 		outline-offset: -1px;
 	}
 	.bind-menu {
@@ -182,10 +182,9 @@
 		border-radius: 0.125rem;
 		max-height: 24rem;
 		overflow: clip;
-		background-color: oklch(var(--b1));
-		/* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
-		box-shadow: oklch(var(--bc) / 0.2) 0px 2px 8px 0px;
-		border: 0.5px solid oklch(var(--bc) / 0.125);
+		background-color: var(--fallback-b1, oklch(var(--b1)));
+		box-shadow: var(--fallback-bc, oklch(var(--bc) / 0.2)) 0px 2px 8px 0px;
+		border: 0.5px solid var(--fallback-bc, oklch(var(--bc) / 0.125));
 		border-radius: 0.5rem;
 	}
 	.list-wrap {
@@ -204,7 +203,7 @@
 		font-weight: 700;
 	}
 	li.option:not(.stray-service):hover {
-		background-color: oklch(var(--s) / 0.15);
+		background-color: var(--fallback-s, oklch(var(--s) / 0.15));
 	}
 	.check {
 		position: absolute;

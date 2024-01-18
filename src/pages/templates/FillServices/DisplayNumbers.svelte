@@ -233,7 +233,7 @@
 		gap: 0.25rem;
 	}
 	.type.unused {
-		background-color: oklch(var(--s) / 0.2);
+		background-color: var(--fallback-s, oklch(var(--s) / 0.2));
 		opacity: 0.5;
 	}
 </style>
