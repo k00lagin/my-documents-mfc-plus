@@ -81,8 +81,8 @@
 		width: max-content;
 	}
 	table {
-		border-top-width: 0;
 		width: max-content;
 		border: 1px solid var(--fallback-b2, oklch(var(--b2)));
+		border-top-width: 0;
 	}
 </style>
