@@ -3,13 +3,11 @@
 	import { onMount } from "svelte";
 	import { checkAuth } from "./api"
 	import Header from './components/Header.svelte';
-	import { authorized, notifications } from "./stores.js";
+	import { authorized, notifications, keyboard } from "./stores.js";
 	import Unauthorized from './pages/Unauthorized.svelte';
 	import { iconStoreInit, iconStore } from "./icon-store";
 
 	onMount(() => {
-		// const html = document.querySelector("html");
-		// html.setAttribute("data-theme", "business"); // corporate
 		iconStoreInit();
 
 		let link = document.createElement("link");
@@ -17,6 +15,23 @@
 		link.type = "image/png";
 		link.href = iconStore.favicon;
 		document.head.appendChild(link);
+
+		window.addEventListener("keydown", (e) => {
+			if (e.ctrlKey && !$keyboard.isCtrlDown) {
+				$keyboard.isCtrlDown = true;
+			}
+			if (e.shiftKey && !$keyboard.isShiftDown) {
+				$keyboard.isShiftDown = true;
+			}
+		});
+		window.addEventListener("keyup", (e) => {
+			if (!e.ctrlKey && $keyboard.isCtrlDown) {
+				$keyboard.isCtrlDown = false;
+			}
+			if (!e.shiftKey && $keyboard.isShiftDown) {
+				$keyboard.isShiftDown = false;
+			}
+		});
 
 		checkAuth();
 		setInterval(() => {

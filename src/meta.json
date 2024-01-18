@@ -31,7 +31,8 @@
 	"require": [
 		"https://mfc-174.ru/store/scripts/3rd-party/xlsx.bundle.js",
 		"https://mfc-174.ru/store/scripts/3rd-party/exceljs.bare.min.js",
-		"https://mfc-174.ru/store/scripts/3rd-party/fuse.js"
+		"https://mfc-174.ru/store/scripts/3rd-party/fuse.js",
+		"https://mfc-174.ru/store/scripts/3rd-party/decimal.min.js"
 	],
 	"grant": [
 		"GM_setValue",

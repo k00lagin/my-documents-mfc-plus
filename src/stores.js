@@ -86,3 +86,8 @@ fillWindowsBookmarks.subscribe(value => {
 	GM_setValue('fill-windows-bookmarks', value);
 	$fillWindowsBookmarks = value;
 })
+
+export const keyboard = writable({
+	isShiftDown: false,
+	isCtrlDown: false
+})

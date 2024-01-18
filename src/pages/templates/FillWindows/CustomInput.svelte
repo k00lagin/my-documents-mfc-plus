@@ -1,6 +1,7 @@
 <script>
-	import { inlineSvg } from '@svelte-put/inline-svg';
+	import { inlineSvg } from "@svelte-put/inline-svg";
 	import { iconStore } from "../../../icon-store";
+	import { keyboard } from "../../../stores.js";
 
 	export let id, value;
 	function sanitize(e) {
@@ -13,12 +14,26 @@
 		e.target.value = value;
 	}
 	function increment() {
-			value = Math.trunc(value) + 1;
+		let step = 1;
+		if ($keyboard.isShiftDown) step = 5;
+		if ($keyboard.isCtrlDown) step = 0.1;
+		value = new Decimal(value).plus(step).toNumber();
 	}
 	function decrement() {
-		value = Math.ceil(value) - 1;
+		let step = 1;
+		if ($keyboard.isShiftDown) step = 5;
+		if ($keyboard.isCtrlDown) step = 0.1;
+		value = new Decimal(value).minus(step).toNumber();
 		if (value < 0) value = 0;
 	}
+	function handleKeydown(e) {
+		if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+			e.preventDefault();
+			if (e.key === "ArrowUp") increment();
+			if (e.key === "ArrowDown") decrement();
+		}
+	}
+	// TODO: Add input increment/decrement on mouse scroll
 </script>
 
 <div class="join">
@@ -34,6 +49,7 @@
 		class="input input-xs input-bordered join-item"
 		type="text"
 		on:input={sanitize}
+		on:keydown={handleKeydown}
 		bind:value
 	/>
 	<button class="btn btn-xs btn-square join-item" on:click={increment}>
