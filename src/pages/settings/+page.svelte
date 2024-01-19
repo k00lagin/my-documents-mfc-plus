@@ -20,6 +20,8 @@
 			class="tab"
 			use:router.link={{ activeClass: "tab-active" }}>Шаблоны</a
 		>
+		<div class="spacer"/>
+		<span>v{GM_info.script.version}</span>
 	</div>
 
 	<div class="content">
