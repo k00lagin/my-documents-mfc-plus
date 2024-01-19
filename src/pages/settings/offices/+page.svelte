@@ -153,9 +153,6 @@
 		display: flex;
 		flex-flow: row nowrap;
 	}
-	.spacer {
-		flex-grow: 1;
-	}
 	.toolbar button {
 		border-radius: 0;
 		border-width: 0;

@@ -18,3 +18,7 @@ body {
 	width: 16px;
 	height: 16px;
 }
+
+.spacer {
+	flex-grow: 1;
+}
