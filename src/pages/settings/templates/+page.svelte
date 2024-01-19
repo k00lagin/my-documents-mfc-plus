@@ -2,6 +2,10 @@
 	import { settings } from "../../../stores.js";
 </script>
 
+<svelte:head>
+	<title>Настройки: Шаблоны</title>
+</svelte:head>
+
 <div class="form-control">
 	<label class="cursor-pointer label">
 		<input

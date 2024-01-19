@@ -44,6 +44,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Настройки: Офисы</title>
+</svelte:head>
+
 <h3>Мои офисы</h3>
 {#if $myOffices.length > 0}
 	<table class="table table-xs">
