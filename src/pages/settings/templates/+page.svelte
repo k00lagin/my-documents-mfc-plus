@@ -1,4 +1,5 @@
 <script>
+	import EditPrefillData from "./EditPrefillData.svelte";
 	import { settings } from "../../../stores.js";
 </script>
 
@@ -31,6 +32,9 @@
 		>
 	</label>
 	{#if $settings["prefillTemplates"]}
+		<EditPrefillData />
+	{/if}
+	{#if $settings["prefillTemplates"]}
 		<label class="cursor-pointer label">
 			<input
 				type="checkbox"
@@ -43,6 +47,9 @@
 </div>
 
 <style>
+	.form-control {
+		align-items: flex-start;
+	}
 	.label {
 		justify-content: flex-start;
 		gap: 0.5rem;
