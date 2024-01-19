@@ -230,6 +230,10 @@
 	label:has(+ input[type="text"]) {
 		cursor: text;
 	}
+	input[type="text"]:focus {
+		outline: 2px solid var(--fallback-s, oklch(var(--s) / 0.5));
+		outline-offset: -1px;
+	}
 	label:hover + input[type="checkbox"] {
 		background-color: rgb(0 0 0 / 0.05);
 		outline: 1px solid var(--fallback-a, oklch(var(--a) / 0.2));
