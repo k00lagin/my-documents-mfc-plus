@@ -61,6 +61,11 @@
 				{#if currentLevel === level}
 					<div class="content">
 						<table class="table table-xs table-pin-rows">
+							<colgroup>
+								<col span="1" style="width: 50%;">
+								<col span="1" style="width: 50%;">
+								<col span="2" style="width: 5rem;">
+							</colgroup>
 							<thead>
 								<tr>
 									<th> Услуга в выгрузке </th>
@@ -177,8 +182,5 @@
 	}
 	table {
 		margin-bottom: 1rem;
-	}
-	td:first-child {
-		width: calc(50% - 2.5rem);
 	}
 </style>
