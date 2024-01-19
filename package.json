@@ -1,6 +1,6 @@
 {
 	"name": "my-documents-mfc-plus",
-	"version": "0.8.4",
+	"version": "0.9.0",
 	"private": true,
 	"description": "Помогает работать с порталом МРС МФЦ. Для использования нового интерфейса используется адрес https://моидокументы.рф/mfc-plus",
 	"scripts": {
