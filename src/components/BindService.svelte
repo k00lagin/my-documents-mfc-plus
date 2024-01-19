@@ -1,17 +1,18 @@
 <script>
 	import { createCombobox, melt } from "@melt-ui/svelte";
 	import { fly } from "svelte/transition";
-	import { serviceBindings } from "../../../stores";
-	import { inlineSvg } from "@svelte-put/inline-svg"
-	import { iconStore } from "../../../icon-store";
+	import { serviceBindings } from "../stores";
+	import { inlineSvg } from "@svelte-put/inline-svg";
+	import { iconStore } from "../icon-store";
 
-	export let strayService = "";
+	export let serviceName = "";
 	export let templateServices = [];
 	export let type = "";
+	export let hideLabel = false;
 
 	function toOption(service) {
 		return {
-			value: service,
+			value: service !== serviceName ? service : 'exact',
 			label: service,
 		};
 	}
@@ -28,7 +29,7 @@
 
 	$: unbindedServices = templateServices.filter(
 		(service) =>
-			!$serviceBindings[type][service] &&
+			(!$serviceBindings[type][service] || Object.keys($serviceBindings[type][service]).length === 0) &&
 			Object.keys($serviceBindings[type]).findIndex(
 				(key) => $serviceBindings[type][key].match === service,
 			) === -1,
@@ -43,15 +44,15 @@
 
 	function handleBind() {
 		if ($selected.value === "blacklist") {
-			$serviceBindings[type][strayService] = {
+			$serviceBindings[type][serviceName] = {
 				blacklist: true,
 			};
 		} else if ($selected.value === "other") {
-			$serviceBindings[type][strayService] = {
+			$serviceBindings[type][serviceName] = {
 				movedTo: "otherServices",
 			};
 		} else {
-			$serviceBindings[type][strayService] = {
+			$serviceBindings[type][serviceName] = {
 				match: $selected.value,
 			};
 		}
@@ -59,10 +60,12 @@
 </script>
 
 <div class="flex flex-col gap-1">
-	<!-- svelte-ignore a11y-label-has-associated-control -->
-	<label use:melt={$label}>
-		<span>{strayService}</span>
-	</label>
+	{#if !hideLabel}
+		<!-- svelte-ignore a11y-label-has-associated-control -->
+		<label use:melt={$label}>
+			<span>{serviceName}</span>
+		</label>
+	{/if}
 
 	<div class="combobox">
 		<div class="input-wrap">
@@ -81,14 +84,15 @@
 		</div>
 		{#if $selected}
 			<div class="binding-controls">
-				<button class="btn btn-xs btn-square btn-ghost" on:click={handleBind}>
+				<button class="btn btn-xs btn-square btn-ghost" on:click={handleBind} title="Сохранить">
 					<svg use:inlineSvg={iconStore["mdi_content-save"]} />
 				</button>
 				<button
 					class="btn btn-xs btn-square btn-ghost"
 					on:click={() => ($selected = undefined)}
+					title="Отмена"
 				>
-					<svg use:inlineSvg={iconStore["mdi_trash"]} />
+					<svg use:inlineSvg={iconStore["mdi_close"]} />
 				</button>
 			</div>
 		{/if}
@@ -108,7 +112,7 @@
 					disabled: true,
 				})}
 			>
-				{strayService}
+				{serviceName}
 			</li>
 			<li
 				class="option"

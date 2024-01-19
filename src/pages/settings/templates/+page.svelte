@@ -1,5 +1,6 @@
 <script>
 	import EditPrefillData from "./EditPrefillData.svelte";
+	import EditServiceBindings from "./EditServiceBindings.svelte";
 	import { settings } from "../../../stores.js";
 </script>
 
@@ -43,6 +44,9 @@
 			/>
 			<span class="label-text">Заполнять отчёты по услугам без скачивания</span>
 		</label>
+		{#if $settings["fillTemplates"]}
+			<EditServiceBindings />
+		{/if}
 	{/if}
 </div>
 

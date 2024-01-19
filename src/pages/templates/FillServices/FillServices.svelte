@@ -4,7 +4,7 @@
 	import { iconStore } from "../../../icon-store";
 	import { serviceBindings } from "../../../stores";
 	import { portal } from "svelte-portal";
-	import BindService from "./BindService.svelte";
+	import BindService from "../../../components/BindService.svelte";
 	import DisplayNumbers from "./DisplayNumbers.svelte";
 
 	let open = false,
@@ -133,7 +133,7 @@
 						{#each strayServices as serviceName (serviceName)}
 							<li>
 								<BindService
-									strayService={serviceName}
+									{serviceName}
 									{templateServices}
 									{type}
 								/>
